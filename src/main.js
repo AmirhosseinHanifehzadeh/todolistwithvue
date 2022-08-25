@@ -4,11 +4,10 @@ import './index.css'
 
 //adding components 
 import App from './App.vue'
-import ToDoInput from "./components/ToDoInput"
-import ToDoList from "./components/TodoList.vue"
-import didList from "./components/didList.vue"
-import weatherComponent from "./components/weatherComponent.vue"
-import notificationComponent from "./components/notificationComponent"
+import { createRouter, createWebHistory } from "vue-router"
+//adding components 
+import TaskPage from "./components/TaskPage.vue";
+import AboutComponent from "./components/AboutComponent.vue";
 
 // adding icon
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -16,16 +15,21 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {faClose} from "@fortawesome/free-solid-svg-icons"
 library.add(faClose)
 
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        {path: '/', redirect: '/tasks'},
+        {path: '/tasks', component: TaskPage},
+        {path: '/about', component: AboutComponent},
+        {path: '/:notFound(.*)', redirect: '/tasks'}
+    ]
+})
 
 const app = createApp(App);
 
-app.component('to-do-input', ToDoInput);
-app.component('to-do-list', ToDoList);
-app.component('did-list', didList);
-app.component('weather-component', weatherComponent);
 app.component('fontawesome-icon', FontAwesomeIcon);
-app.component('notification-component', notificationComponent)
 
+app.use(router);
 app.mount('#app');
 
 
